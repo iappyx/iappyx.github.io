@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iappyx — projects</title>
+<meta name="description" content="Open-source projects by iappyx: a consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and hardware tinkering.">
+<meta name="color-scheme" content="dark">
+
+<!-- Open Graph -->
+<meta property="og:title" content="iappyx — projects">
+<meta property="og:description" content="A consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and hardware tinkering.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://iappyx.github.io/">
+
+<!-- Inline SVG favicon — no external request -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230D0D1A'/%3E%3Ctext x='50' y='71' font-size='62' font-family='system-ui,sans-serif' font-weight='800' text-anchor='middle' fill='%234FC3F7'%3Ei%3C/text%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --bg:#0a0a14;
+    --bg-soft:#0f0f1e;
+    --card:#13132440;
+    --card-solid:#141426;
+    --border:#ffffff14;
+    --border-hover:#4fc3f755;
+    --text:#eef0f7;
+    --text-dim:#9aa0b4;
+    --text-faint:#646a82;
+    --accent:#4fc3f7;
+    --accent-2:#a06bff;
+    --accent-3:#46d39a;
+    --radius:18px;
+    --maxw:1080px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* Ambient gradient backdrop */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:-3;
+    background:
+      radial-gradient(900px 600px at 12% -8%, #4fc3f72e, transparent 60%),
+      radial-gradient(800px 600px at 92% 0%, #a06bff28, transparent 55%),
+      radial-gradient(900px 700px at 50% 110%, #46d39a1e, transparent 60%);
+  }
+  /* Slow-drifting aurora — pure CSS, GPU-cheap */
+  .aurora{
+    position:fixed;inset:-40%;z-index:-2;pointer-events:none;
+    background:conic-gradient(from 0deg at 50% 50%,
+      #4fc3f714, #a06bff22, #46d39a14, #4fc3f70a, #4fc3f714);
+    filter:blur(85px);opacity:.7;
+    animation:auroraSpin 38s linear infinite;
+  }
+  @keyframes auroraSpin{to{transform:rotate(360deg)}}
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:-1;opacity:.5;
+    background-image:radial-gradient(#ffffff0a 1px, transparent 1px);
+    background-size:34px 34px;
+    mask-image:linear-gradient(to bottom, #000 0%, transparent 75%);
+  }
+
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ── Hero ─────────────────────────────── */
+  header.hero{
+    padding:120px 0 70px;
+    text-align:center;
+    position:relative;
+  }
+  .hero h1{
+    font-size:clamp(3rem,8vw,5rem);
+    font-weight:800;letter-spacing:-.035em;line-height:1.02;
+    background:linear-gradient(110deg,#fff,var(--accent),var(--accent-2),#fff);
+    background-size:280% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:wordShine 9s ease-in-out infinite;
+    filter:drop-shadow(0 4px 30px #4fc3f733);
+  }
+  @keyframes wordShine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  .hero p.tag{
+    margin:20px auto 0;max-width:640px;
+    font-size:clamp(1.05rem,2.4vw,1.3rem);
+    color:var(--text-dim);font-weight:400;
+  }
+  .hero .meta{
+    margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:7px 15px;border-radius:100px;
+    background:#ffffff09;border:1px solid var(--border);
+    font-size:.82rem;color:var(--text-dim);
+  }
+  .pill svg{width:14px;height:14px;opacity:.85}
+
+  /* ── Section headings ─────────────────── */
+  .section{padding:34px 0}
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin:18px 0 26px;
+  }
+  .section-head h2{
+    font-size:1.0rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-head h2::before{
+    content:"";width:8px;height:8px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 12px var(--accent),0 0 4px var(--accent);
+  }
+  .section-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--accent)40,transparent)}
+
+  /* ── Cards grid ───────────────────────── */
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+  .grid.feature{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
+
+  .card{
+    position:relative;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,#15152a66,#0e0e1c66);
+    border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px;
+    backdrop-filter:blur(6px);
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    overflow:hidden;
+    opacity:0;transform:translateY(18px);
+  }
+  .card.in{opacity:1;transform:none}
+  .card::before{
+    content:"";position:absolute;inset:0;border-radius:var(--radius);padding:1px;
+    pointer-events:none;
+    background:linear-gradient(135deg,var(--accent)00,transparent);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:.3;transition:opacity .25s;
+  }
+  .card:hover{transform:translateY(-6px);border-color:var(--border-hover);
+    box-shadow:0 24px 60px #00000070, 0 0 40px #4fc3f71f, 0 0 0 1px #4fc3f733}
+  .card:hover::before{opacity:1;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+
+  .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .card.feature h3{font-size:1.5rem}
+
+  .card p.desc{margin:14px 0 0;color:var(--text-dim);font-size:.97rem;flex:1}
+
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .tag{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:.78rem;color:var(--text-dim);
+    padding:5px 11px;border-radius:8px;background:#ffffff08;border:1px solid var(--border);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.86rem;font-weight:600;
+    padding:9px 15px;border-radius:10px;
+    border:1px solid var(--border);background:#ffffff08;color:var(--text);
+    transition:background .2s, border-color .2s, transform .15s;
+  }
+  .btn:hover{background:#ffffff12;border-color:var(--border-hover);transform:translateY(-1px)}
+  .btn.primary{background:linear-gradient(135deg,#4fc3f7,#7aa8ff);color:#06121d;border-color:transparent;
+    box-shadow:0 6px 20px #4fc3f72e}
+  .btn.primary:hover{box-shadow:0 10px 32px #4fc3f755;transform:translateY(-2px)}
+  .btn svg{width:15px;height:15px;fill:currentColor}
+
+  /* ── Footer ───────────────────────────── */
+  footer{
+    padding:70px 0 80px;text-align:center;margin-top:30px;
+    border-top:1px solid var(--border);
+  }
+  footer .who{color:var(--text-dim);max-width:560px;margin:0 auto 22px;font-size:.97rem}
+  footer .ghlink{
+    display:inline-flex;align-items:center;gap:9px;font-weight:600;
+    padding:11px 20px;border-radius:12px;border:1px solid var(--border);background:#ffffff08;
+    transition:background .2s,border-color .2s;
+  }
+  footer .ghlink:hover{background:#ffffff12;border-color:var(--border-hover)}
+  footer .ghlink svg{width:18px;height:18px;fill:currentColor}
+  footer .fineprint{margin-top:28px;color:var(--text-faint);font-size:.8rem}
+
+  @media (max-width:520px){
+    header.hero{padding:90px 0 50px}
+    .card{padding:22px}
+    .grid,.grid.feature{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .card{opacity:1;transform:none;transition:none}
+    .aurora,.hero h1{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>iappyx</h1>
+    <p class="tag">Open-source tools — a consulting-grade PowerPoint toolbar, Android apps that generate themselves, and a launcher you can talk to.</p>
+    <div class="meta">
+      <span class="pill">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+        7 public repositories
+      </span>
+      <span class="pill">100% open source</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ───────── Productivity tools (main) ───────── -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Productivity tools</h2><span class="rule"></span>
+    </div>
+    <div class="grid feature">
+
+      <article class="card feature">
+        <div class="top">
+          <h3>Instrumenta</h3>
+        </div>
+        <p class="desc">A free and open-source <strong>consulting-style PowerPoint toolbar</strong> — the alignment, formatting, and slide-craft shortcuts that paid add-ins charge for, given away. The flagship: years of polish and the widest reach of anything here.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#945db7"></span>Visual Basic</span>
+          <span class="tag">PowerPoint add-in</span>
+          <span class="tag">consulting workflow</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" href="https://github.com/iappyx/Instrumenta">View on GitHub</a>
+        </div>
+      </article>
+
+      <article class="card feature">
+        <div class="top"><h3>Instrumenta-Keys</h3></div>
+        <p class="desc">A keyboard-shortcut companion for Instrumenta — keeps the toolbar's commands one keystroke away so the slide work stays in flow.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#012456"></span>PowerShell</span>
+          <span class="tag">shortcuts</span>
+        </div>
+        <div class="links">
+          <a class="btn" href="https://github.com/iappyx/Instrumenta-Keys">View on GitHub</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ───────── On-device AI for Android ───────── -->
+  <section class="section">
+    <div class="section-head">
+      <h2>On-device AI for Android</h2><span class="rule"></span>
+    </div>
+    <div class="grid feature">
+
+      <article class="card feature">
+        <div class="top"><h3>iappyxOS</h3></div>
+        <p class="desc">Generate <strong>real installed Android APKs on your phone</strong> from a plain-language description. Describe an app to your favorite AI, and iappyxOS builds, signs, and installs it on-device — no server, no app store, no code. 38 native bridges give generated apps real hardware access.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#b07219"></span>Java</span>
+          <span class="tag">Flutter · Kotlin</span>
+          <span class="tag">on-device build &amp; sign</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" href="https://github.com/iappyx/iappyxOS">View on GitHub</a>
+          <a class="btn" href="https://youtu.be/VWvjfr7BCnY">Demo video</a>
+          <a class="btn" href="https://github.com/iappyx/iappyxOS/raw/main/bin/iappyxOS.apk">Download APK</a>
+        </div>
+      </article>
+
+      <article class="card feature">
+        <div class="top"><h3>iappyxOS Launcher</h3></div>
+        <p class="desc">A <strong>programmable Android home screen</strong>. It's a full launcher — icons, folders, dock, app drawer, universal search, profiles — that also lets you <em>talk to it</em>. Describe a widget or live wallpaper ("hourly weather as colored bars", "a battery-reactive lava lamp") and it generates a sandboxed HTML/JS surface that runs on-device.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#a97bff"></span>Kotlin</span>
+          <span class="tag">11 self-hosted plugins</span>
+          <span class="tag">offline render</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" href="https://github.com/iappyx/iappyxOS-Launcher">View on GitHub</a>
+          <a class="btn" href="https://github.com/iappyx/iappyxOS-Launcher/raw/main/bin/iappyxOS-Launcher.apk">Download APK</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ───────── Community showcases ───────── -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Community showcases</h2><span class="rule"></span>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="top"><h3>iappyxOS Showcase</h3></div>
+        <p class="desc">A browsable gallery of apps built with iappyxOS — radio players, network tools, games, a road-trip companion — loadable straight into the editor on-device, or submitted by the community via PR.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span class="tag">community PRs</span>
+        </div>
+        <div class="links"><a class="btn" href="https://github.com/iappyx/iappyxOS-showcase">View on GitHub</a></div>
+      </article>
+
+      <article class="card">
+        <div class="top"><h3>Launcher Showcase</h3></div>
+        <p class="desc">Widgets, programmable wallpapers, page transitions, icon filters, and plugins for iappyxOS Launcher — 78 entries you can import directly from inside the launcher.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
+          <span class="tag">widgets · wallpapers · plugins</span>
+        </div>
+        <div class="links"><a class="btn" href="https://github.com/iappyx/iappyxOS-Launcher-showcase">View on GitHub</a></div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="ghlink" href="https://github.com/iappyx">
+      <svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+      github.com/iappyx
+    </a>
+    <p class="fineprint">Built as a single static page — no trackers, no analytics, no cookies.</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal: stagger cards into view. Pure IntersectionObserver, no deps.
+  const cards = document.querySelectorAll('.card');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          setTimeout(() => el.classList.add('in'), (i % 4) * 70);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(c => io.observe(c));
+  } else {
+    cards.forEach(c => c.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
