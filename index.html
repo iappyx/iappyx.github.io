@@ -4,18 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iappyx — projects</title>
-<meta name="description" content="Open-source projects by iappyx: a consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and hardware tinkering.">
+<meta name="description" content="Open-source projects by iappyx: a consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and clean-room drivers that revive abandoned hardware.">
 <meta name="color-scheme" content="dark">
-
 <!-- Open Graph -->
 <meta property="og:title" content="iappyx — projects">
-<meta property="og:description" content="A consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and hardware tinkering.">
+<meta property="og:description" content="A consulting-grade PowerPoint toolbar, on-device AI app generation for Android, a programmable launcher, and clean-room drivers that revive abandoned hardware.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iappyx.github.io/">
-
 <!-- Inline SVG favicon — no external request -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230D0D1A'/%3E%3Ctext x='50' y='71' font-size='62' font-family='system-ui,sans-serif' font-weight='800' text-anchor='middle' fill='%234FC3F7'%3Ei%3C/text%3E%3C/svg%3E">
-
 <style>
   :root{
     --bg:#0a0a14;
@@ -33,7 +30,6 @@
     --radius:18px;
     --maxw:1080px;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
@@ -44,7 +40,6 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-
   /* Ambient gradient backdrop */
   body::before{
     content:"";
@@ -70,11 +65,8 @@
     background-size:34px 34px;
     mask-image:linear-gradient(to bottom, #000 0%, transparent 75%);
   }
-
   a{color:inherit;text-decoration:none}
-
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-
   /* ── Hero ─────────────────────────────── */
   header.hero{
     padding:120px 0 70px;
@@ -106,7 +98,6 @@
     font-size:.82rem;color:var(--text-dim);
   }
   .pill svg{width:14px;height:14px;opacity:.85}
-
   /* ── Section headings ─────────────────── */
   .section{padding:34px 0}
   .section-head{
@@ -122,11 +113,9 @@
     background:var(--accent);box-shadow:0 0 12px var(--accent),0 0 4px var(--accent);
   }
   .section-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--accent)40,transparent)}
-
   /* ── Cards grid ───────────────────────── */
   .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
   .grid.feature{grid-template-columns:repeat(auto-fit,minmax(420px,1fr))}
-
   .card{
     position:relative;display:flex;flex-direction:column;
     background:linear-gradient(180deg,#15152a66,#0e0e1c66);
@@ -148,13 +137,10 @@
   .card:hover{transform:translateY(-6px);border-color:var(--border-hover);
     box-shadow:0 24px 60px #00000070, 0 0 40px #4fc3f71f, 0 0 0 1px #4fc3f733}
   .card:hover::before{opacity:1;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
-
   .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
   .card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
   .card.feature h3{font-size:1.5rem}
-
   .card p.desc{margin:14px 0 0;color:var(--text-dim);font-size:.97rem;flex:1}
-
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
   .tag{
     display:inline-flex;align-items:center;gap:7px;
@@ -162,7 +148,6 @@
     padding:5px 11px;border-radius:8px;background:#ffffff08;border:1px solid var(--border);
   }
   .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
-
   .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
   .btn{
     display:inline-flex;align-items:center;gap:8px;
@@ -176,7 +161,6 @@
     box-shadow:0 6px 20px #4fc3f72e}
   .btn.primary:hover{box-shadow:0 10px 32px #4fc3f755;transform:translateY(-2px)}
   .btn svg{width:15px;height:15px;fill:currentColor}
-
   /* ── Footer ───────────────────────────── */
   footer{
     padding:70px 0 80px;text-align:center;margin-top:30px;
@@ -191,7 +175,6 @@
   footer .ghlink:hover{background:#ffffff12;border-color:var(--border-hover)}
   footer .ghlink svg{width:18px;height:18px;fill:currentColor}
   footer .fineprint{margin-top:28px;color:var(--text-faint);font-size:.8rem}
-
   @media (max-width:520px){
     header.hero{padding:90px 0 50px}
     .card{padding:22px}
@@ -206,30 +189,26 @@
 </head>
 <body>
 <div class="aurora" aria-hidden="true"></div>
-
 <header class="hero">
   <div class="wrap">
     <h1>iappyx</h1>
-    <p class="tag">Open-source tools — a consulting-grade PowerPoint toolbar, Android apps that generate themselves, and a launcher you can talk to.</p>
+    <p class="tag">Open-source tools — a consulting-grade PowerPoint toolbar, Android apps that generate themselves, a launcher you can talk to, and clean-room drivers that revive dead hardware.</p>
     <div class="meta">
       <span class="pill">
         <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
-        7 public repositories
+        8 public repositories
       </span>
       <span class="pill">100% open source</span>
     </div>
   </div>
 </header>
-
 <main class="wrap">
-
   <!-- ───────── Productivity tools (main) ───────── -->
   <section class="section">
     <div class="section-head">
       <h2>Productivity tools</h2><span class="rule"></span>
     </div>
     <div class="grid feature">
-
       <article class="card feature">
         <div class="top">
           <h3>Instrumenta</h3>
@@ -244,7 +223,6 @@
           <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta">View on GitHub</a>
         </div>
       </article>
-
       <article class="card feature">
         <div class="top"><h3>Instrumenta-Keys</h3></div>
         <p class="desc">A keyboard-shortcut companion for Instrumenta — keeps the toolbar's commands one keystroke away so the slide work stays in flow.</p>
@@ -256,17 +234,14 @@
           <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta-Keys">View on GitHub</a>
         </div>
       </article>
-
     </div>
   </section>
-
   <!-- ───────── On-device AI for Android ───────── -->
   <section class="section">
     <div class="section-head">
       <h2>On-device AI for Android</h2><span class="rule"></span>
     </div>
     <div class="grid feature">
-
       <article class="card feature">
         <div class="top"><h3>iappyxOS</h3></div>
         <p class="desc">Generate <strong>real installed Android APKs on your phone</strong> from a plain-language description. Describe an app to your favorite AI, and iappyxOS builds, signs, and installs it on-device — no server, no app store, no code. 38 native bridges give generated apps real hardware access.</p>
@@ -281,7 +256,6 @@
           <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS/raw/main/bin/iappyxOS.apk">Download APK</a>
         </div>
       </article>
-
       <article class="card feature">
         <div class="top"><h3>iappyxOS Launcher</h3></div>
         <p class="desc">A <strong>programmable Android home screen</strong>. It's a full launcher — icons, folders, dock, app drawer, universal search, profiles — that also lets you <em>talk to it</em>. Describe a widget or live wallpaper ("hourly weather as colored bars", "a battery-reactive lava lamp") and it generates a sandboxed HTML/JS surface that runs on-device.</p>
@@ -295,17 +269,34 @@
           <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher/raw/main/bin/iappyxOS-Launcher.apk">Download APK</a>
         </div>
       </article>
-
     </div>
   </section>
-
+  <!-- ───────── Hardware revival ───────── -->
+  <section class="section">
+    <div class="section-head">
+      <h2>Hardware revival</h2><span class="rule"></span>
+    </div>
+    <div class="grid feature">
+      <article class="card feature">
+        <div class="top"><h3>AI Hardware Revival</h3></div>
+        <p class="desc">Bringing <strong>abandoned hardware back to life</strong> with clean-room drivers, reverse-engineered with AI. First up: the <strong>Canon CanoScan 8000F</strong> flatbed scanner, running with zero Canon software — a pure-Python reference driver on Apple&nbsp;Silicon, a native <em>driverless</em> macOS scanner (an eSCL / AirScan bridge, so it appears right in Image&nbsp;Capture), a C <strong>SANE</strong> backend, and an Android USB-OTG port. All recovered from the vendor firmware — no Windows, no emulator.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#3572A5"></span>Python · C · Kotlin</span>
+          <span class="tag">reverse-engineering</span>
+          <span class="tag">USB · SANE · eSCL</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/ai-hardware-revival">View on GitHub</a>
+        </div>
+      </article>
+    </div>
+  </section>
   <!-- ───────── Community showcases ───────── -->
   <section class="section">
     <div class="section-head">
       <h2>Community showcases</h2><span class="rule"></span>
     </div>
     <div class="grid">
-
       <article class="card">
         <div class="top"><h3>iappyxOS Showcase</h3></div>
         <p class="desc">A browsable gallery of apps built with iappyxOS — radio players, network tools, games, a road-trip companion — loadable straight into the editor on-device, or submitted by the community via PR.</p>
@@ -315,7 +306,6 @@
         </div>
         <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-showcase">View on GitHub</a></div>
       </article>
-
       <article class="card">
         <div class="top"><h3>Launcher Showcase</h3></div>
         <p class="desc">Widgets, programmable wallpapers, page transitions, icon filters, and plugins for iappyxOS Launcher — 78 entries you can import directly from inside the launcher.</p>
@@ -325,12 +315,9 @@
         </div>
         <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher-showcase">View on GitHub</a></div>
       </article>
-
     </div>
   </section>
-
 </main>
-
 <footer>
   <div class="wrap">
     <a class="ghlink" target="_blank" rel="noopener" href="https://github.com/iappyx">
@@ -340,7 +327,6 @@
     <p class="fineprint">Built as a single static page — no trackers, no analytics, no cookies.</p>
   </div>
 </footer>
-
 <script>
   // Scroll-reveal: stagger cards into view. Pure IntersectionObserver, no deps.
   const cards = document.querySelectorAll('.card');
@@ -359,6 +345,5 @@
     cards.forEach(c => c.classList.add('in'));
   }
 </script>
-
 </body>
 </html>
