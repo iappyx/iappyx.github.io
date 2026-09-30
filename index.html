@@ -120,7 +120,6 @@
     position:relative;display:flex;flex-direction:column;
     background:linear-gradient(180deg,#15152a66,#0e0e1c66);
     border:1px solid var(--border);border-radius:var(--radius);
-    padding:26px;
     backdrop-filter:blur(6px);
     transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
     overflow:hidden;
@@ -137,6 +136,8 @@
   .card:hover{transform:translateY(-6px);border-color:var(--border-hover);
     box-shadow:0 24px 60px #00000070, 0 0 40px #4fc3f71f, 0 0 0 1px #4fc3f733}
   .card:hover::before{opacity:1;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .card .body{padding:26px;display:flex;flex-direction:column;flex:1;min-width:0}
+  .card .stage + .body{padding-top:22px}
   .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
   .card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
   .card.feature h3{font-size:1.5rem}
@@ -163,6 +164,48 @@
     box-shadow:0 6px 20px #4fc3f72e}
   .btn.primary:hover{box-shadow:0 10px 32px #4fc3f755;transform:translateY(-2px)}
   .btn svg{width:15px;height:15px;fill:currentColor}
+  /* ── Screenshot stage ─────────────────── */
+  /* Tinted per project via --tint; the screenshot is framed by device type. */
+  .stage{--tint:#4fc3f7;position:relative;aspect-ratio:16/8.4;max-width:100%;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--tint) 34%,transparent),transparent 70%),
+               linear-gradient(180deg,color-mix(in srgb,var(--tint) 10%,#0d0d1a),#0b0b16);
+    border-bottom:1px solid var(--border);display:flex;justify-content:center;align-items:flex-end}
+  .stage::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(#ffffff0d 1px,transparent 1px);background-size:22px 22px;
+    mask-image:linear-gradient(to bottom,#000,transparent 70%)}
+  .stage img{display:block;position:relative;z-index:1;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  /* Window: desktop app rising from the bottom edge */
+  .stage.win img{width:84%;border-radius:10px 10px 0 0;margin-bottom:-2px;
+    box-shadow:0 -1px 0 #ffffff30,0 20px 60px #000a,0 0 0 1px #ffffff14;transform:translateY(12%)}
+  .card:hover .stage.win img{transform:translateY(6%)}
+  /* Strip: wide toolbar or palette, centered */
+  .stage.strip{align-items:center}
+  .stage.strip img{width:90%;border-radius:12px;box-shadow:0 18px 50px #000b,0 0 0 1px #ffffff18}
+  .card:hover .stage.strip img{transform:scale(1.025)}
+  /* Phones: three screens fanned, bezel drawn in CSS */
+  .stage.phones img{width:27%;max-width:150px;aspect-ratio:9/19;object-fit:cover;object-position:top;
+    border-radius:18px;border:5px solid #05050c;box-shadow:0 0 0 1px #ffffff22,0 24px 50px #000c;margin:0 -3%}
+  .stage.phones img:nth-child(1){transform:translateY(34%) rotate(-7deg)}
+  .stage.phones img:nth-child(2){transform:translateY(22%);z-index:2;width:30%;max-width:166px}
+  .stage.phones img:nth-child(3){transform:translateY(34%) rotate(7deg)}
+  .card:hover .stage.phones img:nth-child(1){transform:translateY(28%) rotate(-9deg) translateX(-4%)}
+  .card:hover .stage.phones img:nth-child(2){transform:translateY(16%)}
+  .card:hover .stage.phones img:nth-child(3){transform:translateY(28%) rotate(9deg) translateX(4%)}
+  .stage.short{aspect-ratio:16/6}
+  .stage.short.phones img{width:22%;max-width:110px;border-radius:14px;border-width:4px}
+  /* Combo: Mac window with the phone in front */
+  .stage.combo img.mac{width:76%;border-radius:10px 10px 0 0;transform:translate(-8%,14%);box-shadow:0 20px 60px #000a,0 0 0 1px #ffffff14}
+  .stage.combo img.phone{position:absolute;right:9%;bottom:0;width:22%;max-width:130px;aspect-ratio:9/19;object-fit:cover;object-position:top;
+    border-radius:16px;border:5px solid #05050c;box-shadow:0 0 0 1px #ffffff22,0 24px 50px #000d;transform:translateY(20%);z-index:2}
+  .card:hover .stage.combo img.phone{transform:translateY(12%)}
+  /* Wide card: stage beside the text when a section has a single project */
+  .card.wide{flex-direction:row}
+  .card.wide .stage{flex:1 1 52%;aspect-ratio:auto;min-height:320px;border-bottom:0;border-right:1px solid var(--border)}
+  .card.wide .body{flex:1 1 48%;justify-content:center;padding-top:26px}
+  @media (max-width:760px){
+    .card.wide{flex-direction:column}
+    .card.wide .stage{aspect-ratio:16/9;min-height:0;border-right:0;border-bottom:1px solid var(--border)}
+  }
   /* ── Footer ───────────────────────────── */
   footer{
     padding:70px 0 80px;text-align:center;margin-top:30px;
@@ -179,12 +222,13 @@
   footer .fineprint{margin-top:28px;color:var(--text-faint);font-size:.8rem}
   @media (max-width:520px){
     header.hero{padding:90px 0 50px}
-    .card{padding:22px}
+    .card .body{padding:22px}
     .grid,.grid.feature{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){
     .card{opacity:1;transform:none;transition:none}
     .aurora,.hero h1{animation:none}
+    .stage img{transition:none}
     html{scroll-behavior:auto}
   }
 </style>
@@ -212,54 +256,74 @@
     </div>
     <div class="grid feature">
       <article class="card feature">
-        <div class="top">
-          <h3>Instrumenta</h3>
+        <div class="stage strip" style="--tint:#d35230">
+          <img src="img/instrumenta.png" alt="The Instrumenta Shapes tab in the PowerPoint ribbon" loading="lazy" decoding="async">
         </div>
-        <p class="desc">A free and open-source <strong>consulting-style PowerPoint toolbar</strong> — the alignment, formatting, and slide-craft shortcuts that paid add-ins charge for, given away. The flagship: years of polish and the widest reach of anything here.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#945db7"></span>Visual Basic</span>
-          <span class="tag">PowerPoint add-in</span>
-          <span class="tag">consulting workflow</span>
-        </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta">View on GitHub</a>
-        </div>
-      </article>
-      <article class="card feature">
-        <div class="top"><h3>Instrumenta-Keys</h3></div>
-        <p class="desc">A keyboard-shortcut companion for Instrumenta — keeps the toolbar's commands one keystroke away so the slide work stays in flow.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#012456"></span>PowerShell</span>
-          <span class="tag">shortcuts</span>
-        </div>
-        <div class="links">
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta-Keys">View on GitHub</a>
+        <div class="body">
+          <div class="top">
+            <h3>Instrumenta</h3>
+          </div>
+          <p class="desc">A free and open-source <strong>consulting-style PowerPoint toolbar</strong> — the alignment, formatting, and slide-craft shortcuts that paid add-ins charge for, given away. The flagship: years of polish and the widest reach of anything here.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#945db7"></span>Visual Basic</span>
+            <span class="tag">PowerPoint add-in</span>
+            <span class="tag">consulting workflow</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta">View on GitHub</a>
+          </div>
         </div>
       </article>
       <article class="card feature">
-        <div class="top"><h3>Iepen Fryske Stavering</h3></div>
-        <p class="desc"><strong>Frisian spell checking for Microsoft Word</strong>, including Word for Mac, which has none of its own. Red and blue squiggles with suggestions, based on the official word list (<em>Foarkarswurdlist</em>), including its preferred forms. Mark text as Frisian and Word leaves it alone, while Dutch and English stay with Word's own checker. Everything runs inside Word on your own device; your text never leaves it.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
-          <span class="tag">Word add-in</span>
-          <span class="tag">Frysk · on-device</span>
+        <div class="stage win" style="--tint:#5b7fd6">
+          <img src="img/instrumenta-keys.jpg" alt="The Instrumenta Keys console listing its keyboard shortcuts" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://iappyx.github.io/iepen-fryske-stavering/">Website &amp; install</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iepen-fryske-stavering">View on GitHub</a>
+        <div class="body">
+          <div class="top"><h3>Instrumenta-Keys</h3></div>
+          <p class="desc">A keyboard-shortcut companion for Instrumenta — keeps the toolbar's commands one keystroke away so the slide work stays in flow.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#012456"></span>PowerShell</span>
+            <span class="tag">shortcuts</span>
+          </div>
+          <div class="links">
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/Instrumenta-Keys">View on GitHub</a>
+          </div>
         </div>
       </article>
       <article class="card feature">
-        <div class="top"><h3>Plakke</h3></div>
-        <p class="desc"><strong>⌘Tab, but for your clipboard.</strong> Hold ⌥, tap V, release to paste — your last 10 clips in a frosted strip you flick through with one hand, without leaving the keyboard or looking away. The cards know what they hold: code, links, colors, images, files. Images are read with OCR in the background, text can be reflowed or reformatted on its way out, and a screenshot can be cropped right in the preview — with the window border found and trimmed for you. Password-manager copies, and anything shaped like a key or a card number, never touch the disk and vanish after a minute.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#F05138"></span>Swift</span>
-          <span class="tag">macOS menu bar</span>
-          <span class="tag">local-only · no cloud</span>
-          <span class="tag">1.0</span>
+        <div class="stage win" style="--tint:#2b6fd6">
+          <img src="img/iepen-fryske-stavering.jpg" alt="Iepen Fryske Stavering in Word for Mac, with squiggles and the suggestions panel" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Plakke">View on GitHub</a>
+        <div class="body">
+          <div class="top"><h3>Iepen Fryske Stavering</h3></div>
+          <p class="desc"><strong>Frisian spell checking for Microsoft Word</strong>, including Word for Mac, which has none of its own. Red and blue squiggles with suggestions, based on the official word list (<em>Foarkarswurdlist</em>), including its preferred forms. Mark text as Frisian and Word leaves it alone, while Dutch and English stay with Word's own checker. Everything runs inside Word on your own device; your text never leaves it.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
+            <span class="tag">Word add-in</span>
+            <span class="tag">Frysk · on-device</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://iappyx.github.io/iepen-fryske-stavering/">Website &amp; install</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iepen-fryske-stavering">View on GitHub</a>
+          </div>
+        </div>
+      </article>
+      <article class="card feature">
+        <div class="stage strip" style="--tint:#9fb4ff">
+          <img src="img/plakke.png" alt="The Plakke switcher: a frosted strip of clip cards" loading="lazy" decoding="async">
+        </div>
+        <div class="body">
+          <div class="top"><h3>Plakke</h3></div>
+          <p class="desc"><strong>⌘Tab, but for your clipboard.</strong> Hold ⌥, tap V, release to paste — your last 10 clips in a frosted strip you flick through with one hand, without leaving the keyboard or looking away. The cards know what they hold: code, links, colors, images, files. Images are read with OCR in the background, text can be reflowed or reformatted on its way out, and a screenshot can be cropped right in the preview — with the window border found and trimmed for you. Password-manager copies, and anything shaped like a key or a card number, never touch the disk and vanish after a minute.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#F05138"></span>Swift</span>
+            <span class="tag">macOS menu bar</span>
+            <span class="tag">local-only · no cloud</span>
+            <span class="tag">1.0</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Plakke">View on GitHub</a>
+          </div>
         </div>
       </article>
     </div>
@@ -271,30 +335,44 @@
     </div>
     <div class="grid feature">
       <article class="card feature">
-        <div class="top"><h3>iappyxOS</h3></div>
-        <p class="desc">Generate <strong>real installed Android APKs on your phone</strong> from a plain-language description. Describe an app to your favorite AI, and iappyxOS builds, signs, and installs it on-device — no server, no app store, no code. 38 native bridges give generated apps real hardware access.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#b07219"></span>Java</span>
-          <span class="tag">Flutter · Kotlin</span>
-          <span class="tag">on-device build &amp; sign</span>
+        <div class="stage phones" style="--tint:#46d39a">
+          <img src="img/iappyxos-1.jpg" alt="iappyxOS: my apps" loading="lazy" decoding="async">
+          <img src="img/iappyxos-2.jpg" alt="iappyxOS: describe a new app" loading="lazy" decoding="async">
+          <img src="img/iappyxos-3.jpg" alt="A generated app running" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS">View on GitHub</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://youtu.be/VWvjfr7BCnY">Demo video</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS/raw/main/bin/iappyxOS.apk">Download APK</a>
+        <div class="body">
+          <div class="top"><h3>iappyxOS</h3></div>
+          <p class="desc">Generate <strong>real installed Android APKs on your phone</strong> from a plain-language description. Describe an app to your favorite AI, and iappyxOS builds, signs, and installs it on-device — no server, no app store, no code. 38 native bridges give generated apps real hardware access.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#b07219"></span>Java</span>
+            <span class="tag">Flutter · Kotlin</span>
+            <span class="tag">on-device build &amp; sign</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS">View on GitHub</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://youtu.be/VWvjfr7BCnY">Demo video</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS/raw/main/bin/iappyxOS.apk">Download APK</a>
+          </div>
         </div>
       </article>
       <article class="card feature">
-        <div class="top"><h3>iappyxOS Launcher</h3></div>
-        <p class="desc">A <strong>programmable Android home screen</strong>. It's a full launcher — icons, folders, dock, app drawer, universal search, profiles — that also lets you <em>talk to it</em>. Describe a widget or live wallpaper ("hourly weather as colored bars", "a battery-reactive lava lamp") and it generates a sandboxed HTML/JS surface that runs on-device.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#a97bff"></span>Kotlin</span>
-          <span class="tag">11 self-hosted plugins</span>
-          <span class="tag">offline render</span>
+        <div class="stage phones" style="--tint:#a97bff">
+          <img src="img/launcher-2.jpg" alt="iappyxOS Launcher home screen" loading="lazy" decoding="async">
+          <img src="img/launcher-1.jpg" alt="Launcher with a compass and map widget" loading="lazy" decoding="async">
+          <img src="img/launcher-3.jpg" alt="A generated launcher widget" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher">View on GitHub</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher/raw/main/bin/iappyxOS-Launcher.apk">Download APK</a>
+        <div class="body">
+          <div class="top"><h3>iappyxOS Launcher</h3></div>
+          <p class="desc">A <strong>programmable Android home screen</strong>. It's a full launcher — icons, folders, dock, app drawer, universal search, profiles — that also lets you <em>talk to it</em>. Describe a widget or live wallpaper ("hourly weather as colored bars", "a battery-reactive lava lamp") and it generates a sandboxed HTML/JS surface that runs on-device.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#a97bff"></span>Kotlin</span>
+            <span class="tag">11 self-hosted plugins</span>
+            <span class="tag">offline render</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher">View on GitHub</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher/raw/main/bin/iappyxOS-Launcher.apk">Download APK</a>
+          </div>
         </div>
       </article>
     </div>
@@ -305,17 +383,23 @@
       <h2>Android and Mac</h2><span class="rule"></span>
     </div>
     <div class="grid feature">
-      <article class="card feature">
-        <div class="top"><h3>Brêge</h3></div>
-        <p class="desc"><strong>Your Android phone and your Mac, together.</strong> Messages and calls, notifications with reply, a shared clipboard, files both ways, phone folders in Finder, the phone's screen and apps in Mac windows, and the phone as camera and microphone — directly over your own network. No account, no cloud: every connection is end-to-end encrypted, and Brêge stays silent on networks you haven't chosen. A Mac menu bar app and an Android app on a shared Rust core.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#dea584"></span>Rust · Swift · Kotlin</span>
-          <span class="tag">QUIC · TLS 1.3</span>
-          <span class="tag">local-first · no cloud</span>
-          <span class="tag">1.0 beta</span>
+      <article class="card feature wide">
+        <div class="stage combo" style="--tint:#dea584">
+          <img class="mac" src="img/brege-messages.jpg" alt="Brêge Messages window on the Mac" loading="lazy" decoding="async">
+          <img class="phone" src="img/brege-android.jpg" alt="Brêge on Android, connected" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Brege">View on GitHub</a>
+        <div class="body">
+          <div class="top"><h3>Brêge</h3></div>
+          <p class="desc"><strong>Your Android phone and your Mac, together.</strong> Messages and calls, notifications with reply, a shared clipboard, files both ways, phone folders in Finder, the phone's screen and apps in Mac windows, and the phone as camera and microphone — directly over your own network. No account, no cloud: every connection is end-to-end encrypted, and Brêge stays silent on networks you haven't chosen. A Mac menu bar app and an Android app on a shared Rust core.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#dea584"></span>Rust · Swift · Kotlin</span>
+            <span class="tag">QUIC · TLS 1.3</span>
+            <span class="tag">local-first · no cloud</span>
+            <span class="tag">1.0 beta</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Brege">View on GitHub</a>
+          </div>
         </div>
       </article>
     </div>
@@ -328,15 +412,17 @@
     </div>
     <div class="grid feature">
       <article class="card feature">
-        <div class="top"><h3>AI Hardware Revival</h3></div>
-        <p class="desc">Bringing <strong>abandoned hardware back to life</strong> with clean-room drivers, reverse-engineered with AI. First up: the <strong>Canon CanoScan 8000F</strong> flatbed scanner, running with zero Canon software — a pure-Python reference driver on Apple&nbsp;Silicon, a native <em>driverless</em> macOS scanner (an eSCL / AirScan bridge, so it appears right in Image&nbsp;Capture), a C <strong>SANE</strong> backend, and an Android USB-OTG port. All recovered from the vendor firmware — no Windows, no emulator.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#3572A5"></span>Python · C · Kotlin</span>
-          <span class="tag">reverse-engineering</span>
-          <span class="tag">USB · SANE · eSCL</span>
-        </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/ai-hardware-revival">View on GitHub</a>
+        <div class="body">
+          <div class="top"><h3>AI Hardware Revival</h3></div>
+          <p class="desc">Bringing <strong>abandoned hardware back to life</strong> with clean-room drivers, reverse-engineered with AI. First up: the <strong>Canon CanoScan 8000F</strong> flatbed scanner, running with zero Canon software — a pure-Python reference driver on Apple&nbsp;Silicon, a native <em>driverless</em> macOS scanner (an eSCL / AirScan bridge, so it appears right in Image&nbsp;Capture), a C <strong>SANE</strong> backend, and an Android USB-OTG port. All recovered from the vendor firmware — no Windows, no emulator.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#3572A5"></span>Python · C · Kotlin</span>
+            <span class="tag">reverse-engineering</span>
+            <span class="tag">USB · SANE · eSCL</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/ai-hardware-revival">View on GitHub</a>
+          </div>
         </div>
       </article>
     </div>
@@ -348,42 +434,51 @@
     </div>
     <div class="grid feature">
       <article class="card feature">
-        <div class="top"><h3>Fryskle</h3></div>
-        <p class="desc">A <strong>daily Frisian word game</strong>: guess the word of the day in six tries, with words of 4, 5, 6 or 7 letters from the official word list (<em>Foarkarswurdlist</em>). Accents are forgiven, a free daily hint and a word finder help when you're stuck, and after the game a link shows what the word means. Runs entirely in the browser; no account, no tracking.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
-          <span class="tag">web game</span>
-          <span class="tag">Frysk · 4–7 letters</span>
-        </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://iappyx.github.io/fryskle/">Play</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/fryskle">View on GitHub</a>
-        </div>
-      </article>
-      <article class="card feature">
-        <div class="top"><h3>Heiti's Game Suite</h3></div>
-        <p class="desc"><strong>29 family games to play together — no internet needed.</strong> In the car, on the camp site or on a plane in flight mode, phones and tablets connect straight to each other over Bluetooth, WiFi Direct or a phone's hotspot. Board, card, dice, word, drawing and action games for up to four players, or solo against the computer — and friends without the app join from their phone's browser by scanning a QR code. In Frisian, Dutch and English; no account, nothing goes online.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#00B4AB"></span>Dart</span>
-          <span class="tag">Flutter · Android</span>
-          <span class="tag">offline multiplayer</span>
-          <span class="tag">Frysk · NL · EN</span>
-        </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite">View on GitHub</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite/releases/latest">Download APK</a>
+        <div class="body">
+          <div class="top"><h3>Fryskle</h3></div>
+          <p class="desc">A <strong>daily Frisian word game</strong>: guess the word of the day in six tries, with words of 4, 5, 6 or 7 letters from the official word list (<em>Foarkarswurdlist</em>). Accents are forgiven, a free daily hint and a word finder help when you're stuck, and after the game a link shows what the word means. Runs entirely in the browser; no account, no tracking.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#f1e05a"></span>JavaScript</span>
+            <span class="tag">web game</span>
+            <span class="tag">Frysk · 4–7 letters</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://iappyx.github.io/fryskle/">Play</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/fryskle">View on GitHub</a>
+          </div>
         </div>
       </article>
       <article class="card feature">
-        <div class="top"><h3>Desktop Pet for macOS</h3></div>
-        <p class="desc"><strong>The eSheep is back, on your Mac.</strong> A native port of Adriano Petrucci's <a href="https://github.com/Adrianotiger/desktopPet" target="_blank" rel="noopener">desktopPet</a>: a little sheep walks along the bottom of your screen, climbs onto your windows, rides along when you drag them, and can be picked up and tossed. It plays the same pets as the Windows version and downloads the community pets straight from the original project. Lives in the menu bar.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#F05138"></span>Swift</span>
-          <span class="tag">macOS menu bar</span>
-          <span class="tag">port of desktopPet · MIT</span>
+        <div class="stage win" style="--tint:#7c3aed">
+          <img src="img/heitis-game-suite.jpg" alt="Hosted mode: friends scan a QR code to join" loading="lazy" decoding="async">
         </div>
-        <div class="links">
-          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/DesktopPetMac">View on GitHub</a>
+        <div class="body">
+          <div class="top"><h3>Heiti's Game Suite</h3></div>
+          <p class="desc"><strong>29 family games to play together — no internet needed.</strong> In the car, on the camp site or on a plane in flight mode, phones and tablets connect straight to each other over Bluetooth, WiFi Direct or a phone's hotspot. Board, card, dice, word, drawing and action games for up to four players, or solo against the computer — and friends without the app join from their phone's browser by scanning a QR code. In Frisian, Dutch and English; no account, nothing goes online.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#00B4AB"></span>Dart</span>
+            <span class="tag">Flutter · Android</span>
+            <span class="tag">offline multiplayer</span>
+            <span class="tag">Frysk · NL · EN</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite">View on GitHub</a>
+            <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite/releases/latest">Download APK</a>
+          </div>
+        </div>
+      </article>
+      <article class="card feature">
+        <div class="body">
+          <div class="top"><h3>Desktop Pet for macOS</h3></div>
+          <p class="desc"><strong>The eSheep is back, on your Mac.</strong> A native port of Adriano Petrucci's <a href="https://github.com/Adrianotiger/desktopPet" target="_blank" rel="noopener">desktopPet</a>: a little sheep walks along the bottom of your screen, climbs onto your windows, rides along when you drag them, and can be picked up and tossed. It plays the same pets as the Windows version and downloads the community pets straight from the original project. Lives in the menu bar.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#F05138"></span>Swift</span>
+            <span class="tag">macOS menu bar</span>
+            <span class="tag">port of desktopPet · MIT</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/DesktopPetMac">View on GitHub</a>
+          </div>
         </div>
       </article>
     </div>
@@ -395,22 +490,36 @@
     </div>
     <div class="grid">
       <article class="card">
-        <div class="top"><h3>iappyxOS Showcase</h3></div>
-        <p class="desc">A browsable gallery of apps built with iappyxOS — radio players, network tools, games, a road-trip companion — loadable straight into the editor on-device, or submitted by the community via PR.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
-          <span class="tag">community PRs</span>
+        <div class="stage phones short" style="--tint:#46d39a" aria-hidden="true">
+          <img src="img/iappyxos-3.jpg" alt="" loading="lazy" decoding="async">
+          <img src="img/iappyxos-2.jpg" alt="" loading="lazy" decoding="async">
+          <img src="img/iappyxos-1.jpg" alt="" loading="lazy" decoding="async">
         </div>
-        <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-showcase">View on GitHub</a></div>
+        <div class="body">
+          <div class="top"><h3>iappyxOS Showcase</h3></div>
+          <p class="desc">A browsable gallery of apps built with iappyxOS — radio players, network tools, games, a road-trip companion — loadable straight into the editor on-device, or submitted by the community via PR.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
+            <span class="tag">community PRs</span>
+          </div>
+          <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-showcase">View on GitHub</a></div>
+        </div>
       </article>
       <article class="card">
-        <div class="top"><h3>Launcher Showcase</h3></div>
-        <p class="desc">Widgets, programmable wallpapers, page transitions, icon filters, and plugins for iappyxOS Launcher — 78 entries you can import directly from inside the launcher.</p>
-        <div class="tags">
-          <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
-          <span class="tag">widgets · wallpapers · plugins</span>
+        <div class="stage phones short" style="--tint:#a97bff" aria-hidden="true">
+          <img src="img/launcher-3.jpg" alt="" loading="lazy" decoding="async">
+          <img src="img/launcher-1.jpg" alt="" loading="lazy" decoding="async">
+          <img src="img/launcher-2.jpg" alt="" loading="lazy" decoding="async">
         </div>
-        <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher-showcase">View on GitHub</a></div>
+        <div class="body">
+          <div class="top"><h3>Launcher Showcase</h3></div>
+          <p class="desc">Widgets, programmable wallpapers, page transitions, icon filters, and plugins for iappyxOS Launcher — 78 entries you can import directly from inside the launcher.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#e34c26"></span>HTML</span>
+            <span class="tag">widgets · wallpapers · plugins</span>
+          </div>
+          <div class="links"><a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/iappyxOS-Launcher-showcase">View on GitHub</a></div>
+        </div>
       </article>
     </div>
   </section>
