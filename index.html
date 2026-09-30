@@ -98,6 +98,9 @@
     font-size:.82rem;color:var(--text-dim);
   }
   .pill svg{width:14px;height:14px;opacity:.85}
+  .pill[hidden]{display:none}
+  a.pill{transition:border-color .2s,color .2s}
+  a.pill:hover{color:var(--text);border-color:var(--border-hover)}
   /* ── Section headings ─────────────────── */
   .section{padding:34px 0}
   .section-head{
@@ -253,6 +256,10 @@
         17 public repositories
       </span>
       <span class="pill">100% open source</span>
+      <a class="pill" id="total-stars" target="_blank" rel="noopener" href="https://github.com/iappyx?tab=repositories&amp;sort=stargazers" hidden>
+        <svg viewBox="0 0 16 16" fill="#f5c451" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .67.42l1.88 3.8 4.2.61a.75.75 0 0 1 .41 1.28l-3.04 2.96.72 4.18a.75.75 0 0 1-1.09.79L8 12.33l-3.75 1.97a.75.75 0 0 1-1.09-.79l.72-4.18L.84 6.37a.75.75 0 0 1 .41-1.28l4.2-.61L7.33.67A.75.75 0 0 1 8 .25Z"/></svg>
+        <span></span>
+      </a>
     </div>
   </div>
 </header>
@@ -581,6 +588,13 @@
       } catch { return; }
     }
     const fmt = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : String(n);
+    // Header total: every public repo counts, no minimum.
+    const total = Object.values(stars).reduce((a, b) => a + b, 0);
+    const pill = document.getElementById('total-stars');
+    if (pill && total) {
+      pill.querySelector('span').textContent = `${total.toLocaleString('en-US')} stars on GitHub`;
+      pill.hidden = false;
+    }
     document.querySelectorAll('.card').forEach(card => {
       const link = card.querySelector('a[href^="https://github.com/iappyx/"]');
       const top = card.querySelector('.top');
