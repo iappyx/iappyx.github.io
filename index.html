@@ -139,6 +139,14 @@
   .card .body{padding:26px;display:flex;flex-direction:column;flex:1;min-width:0}
   .card .stage + .body{padding-top:22px}
   .card .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .stars{
+    display:inline-flex;align-items:center;gap:5px;flex:0 0 auto;margin-top:4px;
+    font-size:.8rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-dim);
+    padding:4px 10px;border-radius:100px;background:#ffffff08;border:1px solid var(--border);
+    transition:color .2s,border-color .2s;
+  }
+  .stars:hover{color:var(--text);border-color:var(--border-hover)}
+  .stars svg{width:13px;height:13px;fill:#f5c451}
   .card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
   .card.feature h3{font-size:1.5rem}
   .card p.desc{margin:14px 0 0;color:var(--text-dim);font-size:.97rem;flex:1}
@@ -553,6 +561,42 @@
   } else {
     cards.forEach(c => c.classList.add('in'));
   }
+
+  // Star counts: one call to the public GitHub API, cached for an hour.
+  // If the API is unreachable or rate-limited, the cards simply show no count.
+  (async () => {
+    const KEY = 'iappyx-stars', HOUR = 3600e3, MIN_STARS = 5;
+    let stars = null;
+    try {
+      const c = JSON.parse(localStorage.getItem(KEY));
+      if (c && Date.now() - c.t < HOUR) stars = c.stars;
+    } catch {}
+    if (!stars) {
+      try {
+        const res = await fetch('https://api.github.com/users/iappyx/repos?per_page=100');
+        if (!res.ok) return;
+        stars = {};
+        for (const r of await res.json()) stars[r.name.toLowerCase()] = r.stargazers_count;
+        try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), stars })); } catch {}
+      } catch { return; }
+    }
+    const fmt = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : String(n);
+    document.querySelectorAll('.card').forEach(card => {
+      const link = card.querySelector('a[href^="https://github.com/iappyx/"]');
+      const top = card.querySelector('.top');
+      if (!link || !top) return;
+      const repo = new URL(link.href).pathname.split('/')[2];
+      const n = stars[repo.toLowerCase()];
+      if (!n || n < MIN_STARS) return;
+      const a = document.createElement('a');
+      a.className = 'stars';
+      a.href = `https://github.com/iappyx/${repo}/stargazers`;
+      a.target = '_blank'; a.rel = 'noopener';
+      a.setAttribute('aria-label', `${n} stars on GitHub`);
+      a.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .67.42l1.88 3.8 4.2.61a.75.75 0 0 1 .41 1.28l-3.04 2.96.72 4.18a.75.75 0 0 1-1.09.79L8 12.33l-3.75 1.97a.75.75 0 0 1-1.09-.79l.72-4.18L.84 6.37a.75.75 0 0 1 .41-1.28l4.2-.61L7.33.67A.75.75 0 0 1 8 .25Z"/></svg>' + fmt(n);
+      top.appendChild(a);
+    });
+  })();
 </script>
 </body>
 </html>
