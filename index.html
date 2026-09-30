@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iappyx — projects</title>
-<meta name="description" content="Open-source projects by iappyx: a consulting-grade PowerPoint toolbar, Frisian spell checking for Word, on-device AI app generation for Android, a programmable launcher, a private bridge between Android phones and Macs, clean-room drivers that revive abandoned hardware, and family games you can play without internet.">
+<meta name="description" content="Open-source projects by iappyx: a consulting-grade PowerPoint toolbar, Frisian spell checking for Word, on-device AI app generation for Android, a programmable launcher, a private bridge between Android phones and Macs, clean-room drivers that revive abandoned hardware, family games you can play without internet, and a desktop sheep for the Mac.">
 <meta name="color-scheme" content="dark">
 <!-- Open Graph -->
 <meta property="og:title" content="iappyx — projects">
-<meta property="og:description" content="A consulting-grade PowerPoint toolbar, Frisian spell checking for Word, on-device AI app generation for Android, a programmable launcher, a private bridge between Android phones and Macs, clean-room drivers that revive abandoned hardware, and family games you can play without internet.">
+<meta property="og:description" content="A consulting-grade PowerPoint toolbar, Frisian spell checking for Word, on-device AI app generation for Android, a programmable launcher, a private bridge between Android phones and Macs, clean-room drivers that revive abandoned hardware, family games you can play without internet, and a desktop sheep for the Mac.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iappyx.github.io/">
 <!-- Inline SVG favicon — no external request -->
@@ -141,6 +141,8 @@
   .card h3{font-size:1.32rem;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
   .card.feature h3{font-size:1.5rem}
   .card p.desc{margin:14px 0 0;color:var(--text-dim);font-size:.97rem;flex:1}
+  .card p.desc a{color:var(--accent)}
+  .card p.desc a:hover{text-decoration:underline}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
   .tag{
     display:inline-flex;align-items:center;gap:7px;
@@ -192,11 +194,11 @@
 <header class="hero">
   <div class="wrap">
     <h1>iappyx</h1>
-    <p class="tag">Open-source tools — a consulting-grade PowerPoint toolbar, a Frisian spell checker for Word, Android apps that generate themselves, a launcher you can talk to, a private bridge between your Android phone and your Mac, clean-room drivers that revive dead hardware, and family games you can play without internet.</p>
+    <p class="tag">Open-source tools — a consulting-grade PowerPoint toolbar, a Frisian spell checker for Word, Android apps that generate themselves, a launcher you can talk to, a private bridge between your Android phone and your Mac, clean-room drivers that revive dead hardware, family games you can play without internet, and a sheep that walks across your Mac desktop.</p>
     <div class="meta">
       <span class="pill">
         <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
-        12 public repositories
+        17 public repositories
       </span>
       <span class="pill">100% open source</span>
     </div>
@@ -370,6 +372,18 @@
         <div class="links">
           <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite">View on GitHub</a>
           <a class="btn" target="_blank" rel="noopener" href="https://github.com/iappyx/heitis-game-suite/releases/latest">Download APK</a>
+        </div>
+      </article>
+      <article class="card feature">
+        <div class="top"><h3>Desktop Pet for macOS</h3></div>
+        <p class="desc"><strong>The eSheep is back, on your Mac.</strong> A native port of Adriano Petrucci's <a href="https://github.com/Adrianotiger/desktopPet" target="_blank" rel="noopener">desktopPet</a>: a little sheep walks along the bottom of your screen, climbs onto your windows, rides along when you drag them, and can be picked up and tossed. It plays the same <em>animations.xml</em> pets as the Windows version and downloads the community pets (sheep in every colour, foxes, nekos, Minecraft mobs) straight from the original project. Lives in the menu bar.</p>
+        <div class="tags">
+          <span class="tag"><span class="dot" style="background:#F05138"></span>Swift</span>
+          <span class="tag">macOS menu bar</span>
+          <span class="tag">port of desktopPet · MIT</span>
+        </div>
+        <div class="links">
+          <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/DesktopPetMac">View on GitHub</a>
         </div>
       </article>
     </div>
