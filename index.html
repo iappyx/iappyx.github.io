@@ -11,6 +11,11 @@
 <meta property="og:description" content="A consulting-grade PowerPoint toolbar, Frisian spell checking for Word, on-device AI app generation for Android, a programmable launcher, a private bridge between Android phones and Macs, clean-room drivers that revive abandoned hardware, family games you can play without internet, and a desktop sheep for the Mac.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iappyx.github.io/">
+<meta property="og:image" content="https://iappyx.github.io/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="iappyx: open-source tools for Mac, Android and Office">
+<meta name="twitter:card" content="summary_large_image">
 <!-- Inline SVG favicon — no external request -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230D0D1A'/%3E%3Ctext x='50' y='71' font-size='62' font-family='system-ui,sans-serif' font-weight='800' text-anchor='middle' fill='%234FC3F7'%3Ei%3C/text%3E%3C/svg%3E">
 <style>
@@ -217,6 +222,32 @@
     .card.wide{flex-direction:column}
     .card.wide .stage{aspect-ratio:16/9;min-height:0;border-right:0;border-bottom:1px solid var(--border)}
   }
+  /* Enlarge on click */
+  .stage[role="button"]{cursor:zoom-in}
+  .stage[role="button"]:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  dialog.lightbox{
+    border:0;padding:0;background:transparent;color:var(--text);
+    max-width:none;max-height:none;width:100vw;height:100vh;height:100dvh;
+  }
+  dialog.lightbox::backdrop{background:#05050cdd;backdrop-filter:blur(8px)}
+  .lightbox .shots{
+    width:100%;height:100%;padding:56px 24px 24px;cursor:zoom-out;
+    display:flex;align-items:center;justify-content:center;gap:24px;overflow:auto;
+  }
+  .lightbox img{
+    display:block;max-width:min(1400px,100%);max-height:100%;object-fit:contain;
+    border-radius:12px;box-shadow:0 30px 80px #000c,0 0 0 1px #ffffff1c;
+  }
+  .lightbox .shots.phones img{max-width:min(360px,30%);border-radius:22px}
+  .lightbox .close{
+    position:fixed;top:14px;right:16px;width:40px;height:40px;border-radius:50%;
+    border:1px solid var(--border);background:#ffffff10;color:var(--text);font-size:1.4rem;line-height:1;cursor:pointer;
+  }
+  .lightbox .close:hover,.lightbox .close:focus-visible{background:#ffffff1c;border-color:var(--border-hover)}
+  @media (max-width:640px){
+    .lightbox .shots.phones{justify-content:flex-start}
+    .lightbox .shots.phones img{max-width:none;height:100%;max-height:none}
+  }
   /* ── Footer ───────────────────────────── */
   footer{
     padding:70px 0 80px;text-align:center;margin-top:30px;
@@ -253,7 +284,7 @@
     <div class="meta">
       <span class="pill">
         <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
-        17 public repositories
+        <span id="repo-count">17</span> public repositories
       </span>
       <span class="pill">100% open source</span>
       <a class="pill" id="total-stars" target="_blank" rel="noopener" href="https://github.com/iappyx?tab=repositories&amp;sort=stargazers" hidden>
@@ -338,6 +369,34 @@
           </div>
           <div class="links">
             <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/Plakke">View on GitHub</a>
+          </div>
+        </div>
+      </article>
+      <article class="card feature">
+        <div class="body">
+          <div class="top"><h3>Frisian spell checking for macOS</h3></div>
+          <p class="desc">A small installer that adds <strong>Frisian spell checking to macOS itself</strong>, so it works system-wide in Pages, Mail, Notes, TextEdit, Safari, Chrome and most other Mac apps. It uses the Fryske Akademy's official word list, based on the <em>Foarkarswurdlist</em>, converted so the Mac reads it reliably. No administrator rights and no extra software needed.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#89e051"></span>Shell</span>
+            <span class="tag">macOS system-wide</span>
+            <span class="tag">Frysk · Hunspell</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/frysk-macos">View on GitHub</a>
+          </div>
+        </div>
+      </article>
+      <article class="card feature">
+        <div class="body">
+          <div class="top"><h3>Frysk Hânwurdboek for macOS</h3></div>
+          <p class="desc">Turns the Fryske Akademy's free Linux edition of the <strong><em>Ientalich Frysk Hânwurdboek</em></strong> (2016) into a <strong>native Mac app</strong> for Apple Silicon and Intel. The script contains nothing from the dictionary itself: it downloads the original from the Akademy, converts the old Python 2 program to Python 3, checks every entry and builds the app on your own Mac.</p>
+          <div class="tags">
+            <span class="tag"><span class="dot" style="background:#3572A5"></span>Python</span>
+            <span class="tag">macOS app</span>
+            <span class="tag">Frysk · dictionary</span>
+          </div>
+          <div class="links">
+            <a class="btn primary" target="_blank" rel="noopener" href="https://github.com/iappyx/frysk-wurdboek-macos">View on GitHub</a>
           </div>
         </div>
       </article>
@@ -551,7 +610,35 @@
     <p class="fineprint">Built as a single static page — no trackers, no analytics, no cookies.</p>
   </div>
 </footer>
+<dialog class="lightbox" aria-label="Screenshots">
+  <button class="close" type="button" aria-label="Close">&times;</button>
+  <div class="shots"></div>
+</dialog>
 <script>
+  // Lightbox: click a screenshot stage to see its screenshots at full size.
+  const box = document.querySelector('dialog.lightbox');
+  const shots = box.querySelector('.shots');
+  document.querySelectorAll('.stage:not(.short)').forEach(stage => {
+    const name = stage.closest('.card').querySelector('h3').textContent;
+    stage.setAttribute('role', 'button');
+    stage.tabIndex = 0;
+    stage.setAttribute('aria-label', `Enlarge screenshots of ${name}`);
+    const open = () => {
+      shots.className = 'shots' + (stage.classList.contains('phones') ? ' phones' : '');
+      shots.replaceChildren(...[...stage.querySelectorAll('img')].map(img => {
+        const big = new Image();
+        big.src = img.src; big.alt = img.alt;
+        return big;
+      }));
+      box.showModal();
+    };
+    stage.addEventListener('click', open);
+    stage.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+  box.addEventListener('click', () => box.close());
+
   // Scroll-reveal: stagger cards into view. Pure IntersectionObserver, no deps.
   const cards = document.querySelectorAll('.card');
   if ('IntersectionObserver' in window) {
@@ -588,7 +675,9 @@
       } catch { return; }
     }
     const fmt = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k' : String(n);
-    // Header total: every public repo counts, no minimum.
+    // Header: repository count and total stars, every public repo counts.
+    const count = Object.keys(stars).length;
+    if (count) document.getElementById('repo-count').textContent = count;
     const total = Object.values(stars).reduce((a, b) => a + b, 0);
     const pill = document.getElementById('total-stars');
     if (pill && total) {
